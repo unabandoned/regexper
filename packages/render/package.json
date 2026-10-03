@@ -14,8 +14,8 @@
   "scripts": {
     "clean": "rimraf es lib",
     "build:style": "node scripts/build-style.js",
-    "build:esm": "tsc --module esnext --target es2017 --outDir ./es",
-    "build:cjs": "tsc --module commonjs --target es5 --outDir ./lib",
+    "build:esm": "tsc --module esnext --outDir ./es",
+    "build:cjs": "tsc --module commonjs --outDir ./lib",
     "build": "npm run clean && npm run build:style && npm run build:cjs && npm run build:esm",
     "pretest": "npm run build",
     "test": "node --test \"test/**/*.test.js\""
