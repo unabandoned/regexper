@@ -1,6 +1,6 @@
 {
   "name": "@unabandoned/regexper-parser",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Parse a regular expression to an AST",
   "main": "regexp.js",
   "module": "regexp.js",
