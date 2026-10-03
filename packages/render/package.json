@@ -1,6 +1,6 @@
 {
   "name": "@unabandoned/regexper-render",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Visualize a regular expression with a railroad diagram",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -36,7 +36,7 @@
     "email": "bubkoo.wy@gmail.com"
   },
   "dependencies": {
-    "@unabandoned/regexper-parser": "1.0.0"
+    "@unabandoned/regexper-parser": "1.0.1"
   },
   "peerDependencies": {
     "@svgdotjs/svg.js": "^3.1.2"
