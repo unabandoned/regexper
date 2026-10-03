@@ -45,7 +45,7 @@
     "@svgdotjs/svg.js": "3.2.8",
     "rimraf": "6.1.3",
     "svgdom": "0.1.29",
-    "typescript": "5.9.3"
+    "typescript": "7.0.2"
   },
   "engines": {
     "node": ">=22.12"
