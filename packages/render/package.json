@@ -1,7 +1,7 @@
 {
-  "name": "@regexper/render",
+  "name": "@unabandoned/regexper-render",
   "version": "1.0.0",
-  "description": "Visualize regular expression with railroad diagram",
+  "description": "Visualize a regular expression with a railroad diagram",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
@@ -12,22 +12,13 @@
     "src"
   ],
   "scripts": {
-    "clean:build": "rimraf es lib",
-    "clean:coverage": "rimraf ./test/coverage",
-    "clean": "run-p clean:build clean:coverage",
+    "clean": "rimraf es lib",
+    "build:style": "node scripts/build-style.js",
     "build:esm": "tsc --module esnext --target es2017 --outDir ./es",
     "build:cjs": "tsc --module commonjs --target es5 --outDir ./lib",
-    "build:dev": "run-p build:cjs build:esm",
-    "build:watch": "run-s 'build:esm --w'",
-    "build:watch:esm": "run-s 'build:esm --w'",
-    "build:watch:cjs": "run-s 'build:cjs --w'",
-    "build:style": "node scripts/build-style.js",
-    "build": "run-s build:style build:dev",
-    "prebuild": "run-s clean",
-    "test": "echo .",
-    "coveralls": "cat ./test/coverage/lcov.info | coveralls",
-    "pretest": "run-p clean:coverage",
-    "prepare": "run-p build test"
+    "build": "npm run clean && npm run build:style && npm run build:cjs && npm run build:esm",
+    "pretest": "npm run build",
+    "test": "node --test \"test/**/*.test.js\""
   },
   "keywords": [
     "regular expression",
@@ -45,22 +36,31 @@
     "email": "bubkoo.wy@gmail.com"
   },
   "dependencies": {
-    "@regexper/parser": "1.0.0"
+    "@unabandoned/regexper-parser": "1.0.0"
   },
   "peerDependencies": {
     "@svgdotjs/svg.js": "^3.1.2"
   },
-  "homepage": "https://github.com/bubkoo/regexper",
+  "devDependencies": {
+    "@svgdotjs/svg.js": "^3.2.8",
+    "rimraf": "^6.0.1",
+    "svgdom": "^0.1.29",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "homepage": "https://github.com/unabandoned/regexper/tree/master/packages/render#readme",
   "bugs": {
-    "url": "https://github.com/bubkoo/regexper/issues"
+    "url": "https://github.com/unabandoned/regexper/issues"
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/bubkoo/regexper.git",
+    "url": "git+https://github.com/unabandoned/regexper.git",
     "directory": "packages/render"
   },
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org"
+    "provenance": true
   }
 }

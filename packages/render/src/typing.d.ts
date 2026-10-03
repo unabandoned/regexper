@@ -1,1 +1,1 @@
-declare module '@regexper/parser'
+declare module '@unabandoned/regexper-parser'
