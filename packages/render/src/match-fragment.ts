@@ -1,4 +1,4 @@
-import { Point, G, create } from '@svgdotjs/svg.js'
+import { Point, adopt, create } from '@svgdotjs/svg.js'
 import { Node } from './node'
 import { AnchorNode } from './anchor'
 import { AnyCharacterNode } from './any-character'
@@ -113,7 +113,10 @@ export class MatchFragment extends Node {
       const box = this.bbox()
 
       if (tooltipStr) {
-        const tooltip = create('title') as G
+        // `adopt` hands back the svg.js wrapper for the node it is given, which
+        // is what `addTo`/`add` want. The cast this replaced claimed a <title>
+        // was a <g>, and svg.js 3.2 stopped believing it.
+        const tooltip = adopt(create('title'))
         this.container.text(tooltipStr).addTo(tooltip)
         label.add(tooltip)
       }
