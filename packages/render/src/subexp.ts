@@ -16,7 +16,7 @@ const LABEL_MAP = {
 export class SubexpNode extends Node {
   public readonly capture: Metadata
   public readonly regexp: RegexpNode
-  public readonly proxy: RegexpNode | null
+  public readonly proxy!: RegexpNode | null
 
   constructor(metadata: Metadata, parent: Node) {
     super(metadata, parent)
