@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/unabandoned/regexper/compare/regexper-parser-v1.0.1...regexper-parser-v1.0.2) (2026-10-03)
+
+
+### Bug Fixes
+
+* stop depending on canopy, by committing the parser it generates ([#7](https://github.com/unabandoned/regexper/issues/7)) ([9fc5d02](https://github.com/unabandoned/regexper/commit/9fc5d020810fc10a43534c380fc18e51d09ebc0b))
+
 ## [1.0.1](https://github.com/unabandoned/regexper/compare/regexper-parser-v1.0.0...regexper-parser-v1.0.1) (2026-10-03)
 
 
