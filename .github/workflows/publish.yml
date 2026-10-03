@@ -1,0 +1,87 @@
+name: publish
+
+# NOT the org's reusable-publish.yml, and deliberately so: that workflow runs a
+# single `npm publish` at the repository root, which cannot work here. This repo
+# is a workspace whose root is private and whose two publishable packages live
+# under packages/. It also releases them independently, so release-please can
+# publish one GitHub release for the parser and another for the renderer, and a
+# blanket `npm publish --workspaces` on the second release would fail on the
+# version it already pushed.
+#
+# So this iterates the workspaces and publishes only the versions the registry
+# does not have yet. Everything else follows reusable-publish: npm >= 11.5.1 for
+# OIDC, `--ignore-scripts` on every publish so no lifecycle script runs beside
+# the token, and the same try-OIDC-then-fall-back-to-token bootstrap that flips
+# OIDC_ENABLED once trusted publishing works.
+#
+# Once this has proven itself it belongs upstream in unabandoned/.github as a
+# `workspaces` input, so the org has one publish path again rather than two.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      # OIDC trusted publishing requires npm >= 11.5.1.
+      - run: npm install -g npm@latest
+
+      # Everything these packages publish is generated — the grammar through
+      # canopy, es/ and lib/ through tsc — and `npm publish --ignore-scripts`
+      # never runs prepare, so the tarballs would otherwise be empty.
+      - run: npm install
+      - run: npm run build
+
+      - name: Publish the workspaces the registry is missing
+        id: publish
+        env:
+          OIDC_ENABLED: ${{ vars.OIDC_ENABLED }}
+          NPM_SECRET: ${{ secrets.NPM_SECRET }}
+        run: |
+          set -eu
+          oidc_worked=0
+          for dir in packages/*; do
+            [ -f "$dir/package.json" ] || continue
+            name=$(node -p "require('./$dir/package.json').name")
+            version=$(node -p "require('./$dir/package.json').version")
+            if [ "$(node -p "!!require('./$dir/package.json').private")" = true ]; then
+              echo "$name is private; skipping."
+              continue
+            fi
+            if npm view "$name@$version" version >/dev/null 2>&1; then
+              echo "$name@$version is already published; skipping."
+              continue
+            fi
+
+            if [ "${OIDC_ENABLED:-}" = 'true' ]; then
+              npm publish -w "$name" --provenance --access public --ignore-scripts
+            elif npm publish -w "$name" --provenance --access public --ignore-scripts; then
+              oidc_worked=1
+            else
+              echo "OIDC not available yet for $name; publishing with NPM_SECRET."
+              echo "To enable OIDC, run this once locally with a 2FA-enabled account:"
+              echo "  npm trust github $name --repo $GITHUB_REPOSITORY --file publish.yml --allow-publish"
+              NODE_AUTH_TOKEN="$NPM_SECRET" npm publish -w "$name" --provenance --access public --ignore-scripts
+            fi
+          done
+          echo "oidc_worked=$oidc_worked" >> "$GITHUB_OUTPUT"
+
+      - name: Record OIDC flag (OIDC worked -> trusted publishing is live)
+        if: ${{ vars.OIDC_ENABLED != 'true' && steps.publish.outputs.oidc_worked == '1' }}
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
+        run: gh variable set OIDC_ENABLED --repo "$GITHUB_REPOSITORY" --body true

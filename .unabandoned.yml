@@ -1,0 +1,30 @@
+schema: 1
+
+package: "@unabandoned/regexper-render"
+
+upstream:
+  repo: bubkoo/regexper
+  reason: "both published packages have sat at 1.0.0 since July 2022, and the dev tree no longer installs"
+
+summary: >-
+  Turns a regular expression into a railroad diagram: a PEG parser that reads the
+  expression into an AST (@unabandoned/regexper-parser) and a renderer that draws
+  that AST as SVG (@unabandoned/regexper-render).
+
+why-forked: >-
+  it-tools reaches @regexper/render from its regex visualizer, so it ships in the
+  bundle. Both packages were last published in July 2022 and neither has had a
+  release since. The rot had already arrived in the dev tree: upstream's
+  semantic-release stack cannot be installed by npm at all
+  (@semantic-release-monorepo/cli wants semantic-release 19 or 20 against the
+  repo's 24), and the renderer no longer compiles against current
+  @svgdotjs/svg.js — its peer dependency, so consumers pick the version.
+
+used-by:
+  - consumer: "it-tools"
+    purpose: >-
+      backs the regex visualizer, via generateSVG from @regexper/render
+
+status: active
+
+tags: [regexp, regex, visualization, railroad-diagram, svg, parser, monorepo]
