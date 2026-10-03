@@ -1,4 +1,4 @@
-import parser from '@regexper/parser'
+import parser from '@unabandoned/regexper-parser'
 import { SVG, getWindow } from '@svgdotjs/svg.js'
 import { style } from './style'
 import { Metadata } from './types'

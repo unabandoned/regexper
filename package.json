@@ -1,6 +1,6 @@
 {
   "name": "regexper",
-  "description": "Regular expression visualizer using railroad diagram",
+  "description": "Regular expression visualizer using railroad diagrams",
   "private": true,
   "keywords": [
     "regexp",
@@ -8,40 +8,18 @@
     "visualization",
     "railroad-diagrams"
   ],
+  "workspaces": [
+    "packages/parser",
+    "packages/render"
+  ],
   "scripts": {
-    "lint": "eslint --fix",
-    "clean": "run-s clean:build clean:modules",
-    "clean:build": "pnpm -r --if-present --parallel --filter=./packages/* run clean",
-    "clean:modules": "pnpm -r --parallel exec rimraf node_modules && rimraf pnpm-lock.yaml && rimraf node_modules",
-    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
-    "build": "pnpm -r --if-present --filter=./packages/* run build",
-    "test": "pnpm -r --if-present --filter=./packages/* run test",
-    "prepare": "run-s build"
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "devDependencies": {
-    "@bubkoo/commitlint-config": "^2.0.0",
-    "@bubkoo/eslint-config": "^3.1.1",
-    "@bubkoo/husky-hooks": "^2.0.1",
-    "@bubkoo/lint-staged-config": "^2.0.0",
-    "@bubkoo/prettier-config": "^2.0.0",
-    "@bubkoo/semantic-release-config": "^2.0.0",
-    "@bubkoo/tsconfig": "^2.0.0",
-    "@commitlint/cli": "^19.8.0",
-    "@commitlint/config-conventional": "^19.8.0",
-    "@semantic-release-monorepo/cli": "^2.1.5",
-    "eslint": "^9.24.0",
-    "is-ci": "^4.1.0",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^3.5.3",
-    "rimraf": "^6.0.1",
-    "semantic-release": "^24.2.3",
-    "tslib": "^2.8.1",
-    "typescript": "^5.8.3"
-  },
-  "commitlint": {
-    "extends": [
-      "@bubkoo/commitlint-config"
-    ]
+    "@commitlint/cli": "21.2.2",
+    "@commitlint/config-conventional": "21.2.2"
   },
   "license": "MIT",
   "author": {
@@ -50,10 +28,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bubkoo/regexper.git"
+    "url": "git+https://github.com/unabandoned/regexper.git"
   },
   "bugs": {
-    "url": "https://github.com/bubkoo/regexper/issues"
+    "url": "https://github.com/unabandoned/regexper/issues"
   },
-  "homepage": "https://github.com/bubkoo/regexper#readme"
+  "homepage": "https://github.com/unabandoned/regexper#readme"
 }

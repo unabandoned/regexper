@@ -1,7 +1,7 @@
 {
-  "name": "@regexper/parser",
+  "name": "@unabandoned/regexper-parser",
   "version": "1.0.0",
-  "description": "Parse regular expression to ast tree",
+  "description": "Parse a regular expression to an AST",
   "main": "regexp.js",
   "module": "regexp.js",
   "unpkg": "regexp.min.js",
@@ -11,12 +11,11 @@
     "regexp.min.js"
   ],
   "scripts": {
-    "clean": "rimraf *.js",
-    "build:dev": "canopy ./regexp.peg --lang js",
-    "build:umd": "terser -c -o regexp.min.js -- regexp.js",
-    "build": "run-s build:dev build:umd",
-    "prebuild": "run-s clean",
-    "prepare": "run-p build"
+    "clean": "rimraf regexp.js regexp.min.js",
+    "build:grammar": "canopy ./regexp.peg --lang js",
+    "build:min": "terser -c -o regexp.min.js -- regexp.js",
+    "build": "npm run clean && npm run build:grammar && npm run build:min",
+    "test": "npm run build:grammar && node --test \"test/**/*.test.js\""
   },
   "keywords": [
     "regexp",
@@ -31,20 +30,24 @@
     "email": "bubkoo.wy@gmail.com"
   },
   "devDependencies": {
-    "canopy": "^0.4.0",
-    "terser": "^5.14.2"
+    "canopy": "^0.4.1",
+    "rimraf": "^6.0.1",
+    "terser": "^5.44.0"
   },
-  "homepage": "https://github.com/bubkoo/regexper",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "homepage": "https://github.com/unabandoned/regexper/tree/master/packages/parser#readme",
   "bugs": {
-    "url": "https://github.com/bubkoo/regexper/issues"
+    "url": "https://github.com/unabandoned/regexper/issues"
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/bubkoo/regexper.git",
+    "url": "git+https://github.com/unabandoned/regexper.git",
     "directory": "packages/parser"
   },
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org"
+    "provenance": true
   }
 }
