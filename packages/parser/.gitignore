@@ -1,3 +1,2 @@
-# Generated from regexp.peg by canopy, and minified from that.
-regexp.js
+# Minified from the committed regexp.js at build time.
 regexp.min.js

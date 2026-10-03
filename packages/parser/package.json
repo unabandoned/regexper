@@ -11,11 +11,9 @@
     "regexp.min.js"
   ],
   "scripts": {
-    "clean": "rimraf regexp.js regexp.min.js",
-    "build:grammar": "canopy ./regexp.peg --lang js",
-    "build:min": "terser -c -o regexp.min.js -- regexp.js",
-    "build": "npm run clean && npm run build:grammar && npm run build:min",
-    "test": "npm run build:grammar && node --test \"test/**/*.test.js\""
+    "clean": "rimraf regexp.min.js",
+    "build": "terser -c -o regexp.min.js -- regexp.js",
+    "test": "npm run build && node --test \"test/**/*.test.js\""
   },
   "keywords": [
     "regexp",
@@ -30,7 +28,6 @@
     "email": "bubkoo.wy@gmail.com"
   },
   "devDependencies": {
-    "canopy": "0.4.1",
     "rimraf": "6.1.3",
     "terser": "5.51.2"
   },
