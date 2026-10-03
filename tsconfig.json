@@ -1,10 +1,17 @@
 {
-  "exclude": ["**/node_modules", "**/es", "**/lib", "**/dist"],
+  "exclude": [
+    "**/node_modules",
+    "**/es",
+    "**/lib",
+    "**/dist"
+  ],
   "compilerOptions": {
     "module": "commonjs",
-    "moduleResolution": "node",
-    "target": "es5",
-    "lib": ["DOM", "ES2020"],
+    "target": "es2017",
+    "lib": [
+      "DOM",
+      "ES2020"
+    ],
     "sourceMap": true,
     "declaration": true,
     "skipLibCheck": true,

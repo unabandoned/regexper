@@ -13,9 +13,9 @@ import { LiteralNode } from './literal'
  */
 export class MatchNode extends Node {
   public readonly fragments: MatchFragment[]
-  public readonly proxy: MatchFragment | null
-  public start: Node
-  public end: Node
+  public readonly proxy!: MatchFragment | null
+  public start!: Node
+  public end!: Node
 
   constructor(metadata: Metadata, parent: RegexpNode) {
     super(metadata, parent)

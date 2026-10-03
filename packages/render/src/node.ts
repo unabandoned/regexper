@@ -24,7 +24,7 @@ export abstract class Node implements Metadata {
 
   public readonly metadata: Metadata
   public readonly proxy?: Node | null
-  public container: G | Svg
+  public container!: G | Svg
 
   constructor(metadata: Metadata, parent: Node)
   constructor(metadata: Metadata, state: State)

@@ -29,7 +29,7 @@ export class MatchFragment extends Node {
    * The repetition rule for the fragment
    */
   public readonly repeat: RepeatNode
-  public readonly proxy: Node | null
+  public readonly proxy!: Node | null
   public readonly canMerge: boolean
 
   constructor(metadata: Metadata, parent: MatchNode) {

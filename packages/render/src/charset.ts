@@ -14,7 +14,7 @@ import { bboxWithTransform, spaceVertical } from './util'
 export class CharsetNode extends Node {
   public readonly label: string
   public readonly parts: (CharsetRangeNode | CharsetEscapeNode | LiteralNode)[]
-  public partContainer: G
+  public partContainer!: G
 
   constructor(metadata: Metadata, parent: Node) {
     super(metadata, parent)
