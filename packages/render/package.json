@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@svgdotjs/svg.js": "3.2.8",
-    "rimraf": "6.1.3",
+    "rimraf": "6.1.4",
     "svgdom": "0.1.29",
     "typescript": "7.0.2"
   },
