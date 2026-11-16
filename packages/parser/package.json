@@ -28,7 +28,7 @@
     "email": "bubkoo.wy@gmail.com"
   },
   "devDependencies": {
-    "rimraf": "6.1.3",
+    "rimraf": "6.1.4",
     "terser": "5.51.2"
   },
   "engines": {
